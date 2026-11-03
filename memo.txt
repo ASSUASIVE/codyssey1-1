@@ -1,0 +1,113 @@
+수행 체크리스트
+    - [ ] 터미널 기본 조작 및 폴더 구성
+PowerShell 사용
+1. 해당 폴더로 이동하기C:\Users\ethanhaeunc4031\Ethan-codyssey
+cd C:\Users\ethanhaeunc4031\Ethan-codyssey
+-> cd: change directory(폴더 이동)
+폴더가 없다면
+mkdir Ethan-codyssey
+cd Ethan-codyssey
+-> mkdir: make directory
+2. 현재 위치 확인하기
+pwd
+-> pwd: print working directory(현재 폴더 위치 출력)
+-> 결과: .../Ethan-codyssey가 보이면 성공
+3. 폴더 안 내용 보기
+ls
+ls: list(파일/폴더 목록 보기)
+-> 안에 비어있을 수도 있음
+
+요약
+pwd -> 현재 폴더 확인
+ls -> 내용 확인
+cd ...Ethan-codyssey -> 폴더 들어가기
+cd .. -> 한 단계 위로
+
+    - [ ] 권한 변경 실습
+권한(permission) 개념은 원래 리눅스/맥에서 쓰는 chmod 명령이 기본임
+A. Docker 컨테이너 안에서 리눅스 환경에서 chmod 사용
+1. 3종류의 권한
+r 읽기 read
+w 쓰기 write
+x 실행 execute
+2. 3종류의 대상
+u(user) 소유자(나)
+g(group) 그룹
+o(others) 그 외 모두
+3. ex) ls -l로 보면
+-wxr-xr--
+맨 앞 -: 파일(디렉토리면 d)
+rwx: 소유자: 읽기/쓰기/실행 OK
+r-x: 그룹: 읽기/실행 OK
+r--: 그 외: 읽기만 OK
+*Docker
+Docker: 컨테이너를 실행하는 도구/프로그램(자동차)
+리눅스: 그 컨테이너 안에 들어있는 운영체제(자동차 안의 엔진)
+-> "Docker 컨테이너를 실행해서, 그 안(리눅스 환경)에서 권한 실습을 해라"
+1. Docker 컨테이너 실행하기(작업 폴더를 컨테이너와 공유하면서 들어가는 명령)
+docker run -it --rm -v ${PWD}:/app -w /app ubuntu bash
+옵션, 의미
+-it: 터미널로 상호작용
+--rm: 끝나면 컨테이너 자동 삭제
+-v ${PWD}:/app: 현재 폴더를 컨테이너 /app에 연결
+-w /app: 작업 폴더를 /app으로 설정
+ubuntu: 우분투(리눅스) 이미지 사용
+bash: bash 셸 실행
+결과: root@...:/app#
+분석:
+Unable to find image 'ubuntu:latest' locally   ← 내 컴퓨터에 우분투 이미지가 없음
+Pulling from library/ubuntu                    ← 인터넷에서 자동으로 다운로드!
+Pull complete                                  ← 다운로드 완료
+root@94af2b54a38b:/app#                         ← 컨테이너 안에 들어옴! 🎉
+프롬프트 읽는 법:
+root@94af2b54a38b:/app#
+ │        │          │   │
+ │        │          │   └─ # = 관리자(root) 표시
+ │        │          └───── 현재 위치 (/app 폴더)
+ │        └──────────────── 컨테이너 ID
+ └───────────────────────── 현재 사용자 (root)
+2. 과제 요구사항: 파일 1개 + 디렉토리 1개에 권한 실험
+실험 대상 만들기
+파일 만들기
+touch testfile.txt
+-> touch: 빈 파일을 만드는 명령
+디렉토리 만들기
+mkdir testdir
+-> mkdir: 폴더(directory)를 만드는 명령(make directory)
+위 두 명령 입력한 뒤, ls -l 명령하면 파일 목록을 권한 정보까지 자세히 보여줌
+drwxr-xr-x 1 root root 4096 Nov  3 00:01 testdir
+-> 맨 앞 d: directory(폴더)라는 뜻
+echo "hello" > testfile.txt
+-> testfile.txt라는 파일을 만든다.(아까 배운 > 리다이렉션)
+mkdir testdir
+-> testdir라는 디렉토리(폴더)를 만든다.
+3. 잘 만들어졌는지 확인
+ls -l
+(아래 두 줄)
+drwxr-xr-x   2 root root 4096 Nov  3 00:16 testdir
+-rw-r--r--   1 root root    6 Nov  3 00:15 testfile.txt
+맨 앞 10글자가 권한 정보
+-   rw-   r--   r--
+│    │     │     │
+│   소유자  그룹  기타(전체)
+│
+파일종류 (- 파일, d 디렉토리)
+다음: 숫자로 권한 바꾸기 (chmod)
+권한을 바꿀 땐 chmod 명령어를 써요!
+(change mode = 모드(권한) 바꾸기)
+그런데 권한을 숫자로 표현할 수 있어요! 이게 핵심이에요!
+권한	숫자
+r (읽기)	4
+w (쓰기)	2
+x (실행)	1
+- (없음)	0
+4 + 2 + 1  |  7
+────    ──
+ (계산)      (결과)
+    - [ ] Docker 설치/점검
+    - [ ] hello-world 실행
+    - [ ] Dockerfile 빌드/실행
+    - [ ] 포트 매핑 접속(2회)
+    - [ ] 바인드 마운트 반영
+    - [ ] 볼륨 영속성
+    - [ ] Git 설정 + VSCode GitHub 연동
