@@ -17,19 +17,111 @@
 - Git: 2.56.0
 
 ## 2) 수행 체크리스트
+- [ ] Git 설정 + GitHub 연동
 - [x] 터미널 기본 조작 및 폴더 구성
-- [x] 권한 변경 실습
 - [x] Docker 설치/점검
-- [x] Docker 기본 운영 명령(images/ps/logs/stats)
 - [x] hello-world 실행
+- [x] Docker 기본 운영 명령(images/ps/logs/stats/etc..)
+- [x] 권한 변경 실습
 - [ ] ubuntu 컨테이너 실행 및 내부 진입
 - [ ] Dockerfile 빌드/실행
 - [ ] 포트 매핑 접속
 - [ ] 바인드 마운트 반영
 - [ ] 볼륨 영속성
-- [x] Git 설정 + GitHub 연동
+- [ ] Git 설정 + GitHub 연동
 
 ## 3) 수행 로그(발췌)
+
+### 터미널 기본 조작 및 폴더 구성
+
+#### 지금 내 위치 확인
+
+```
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> pwd
+
+Path                                                   
+----                                                   
+C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments
+```
+
+#### 파일/폴더 목록 보기
+
+```
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> ls
+
+
+    디렉터리: C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments
+
+
+Mode                 LastWriteTime         Length Name                                                                  
+----                 -------------         ------ ----                                                                                                                              
+-a----      2026-11-04   오후 1:30          11049 README.md                                                             
+```
+
+##### 파일/폴더 목록 보기(숨김 포함)
+
+```
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> ls -Force
+
+
+    디렉터리: C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments
+
+
+Mode                 LastWriteTime         Length Name                                                                  
+----                 -------------         ------ ----                                                                                                                               
+-a----      2026-11-04   오후 1:30          11049 README.md                                                             
+```
+
+#### 폴더 안으로 이동
+
+```
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey> cd 1_1_assignments
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> 
+```
+
+#### 상위 폴더로 나가기
+
+```
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> cd ..
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey> 
+```
+
+#### 생성
+
+```
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> New-Item 
+
+cmdlet New-Item(명령 파이프라인 위치 1)
+다음 매개 변수에 대한 값을 제공하십시오.
+Path[0]: test-copy.txt
+Path[1]: 
+
+
+    디렉터리: C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments
+
+
+Mode                 LastWriteTime         Length Name                                                                  
+----                 -------------         ------ ----                                                                  
+-a----      2026-11-04   오후 3:16              0 test-copy.txt
+```
+
+#### 생성2
+
+```
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> New-Item -Name "test-copy.txt" -ItemType File
+
+
+    디렉터리: C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments
+
+
+Mode                 LastWriteTime         Length Name                                                                  
+----                 -------------         ------ ----                                                                  
+-a----      2026-11-04   오후 3:18              0 test-copy.txt   
+```
+
+
+
+
 
 ### 권한 변경 실습 *** 처음부터 다시 하기, docker가지고 파일 생성 등 로그 작성 ***
 
@@ -50,59 +142,23 @@ chmod 700 testdir
 변경 전
 
 ```
-root@31a402df5eba:/# ls -l
-total 56
-lrwxrwxrwx   1 root root    7 Apr 20  2026 bin -> usr/bin
-drwxr-xr-x   2 root root 4096 Apr 20  2026 boot
-drwxr-xr-x   5 root root  360 Nov  3 00:14 dev
-drwxr-xr-x   1 root root 4096 Nov  3 00:14 etc
-drwxr-xr-x   3 root root 4096 Oct 25 10:26 home
-lrwxrwxrwx   1 root root    7 Apr 20  2026 lib -> usr/lib
-lrwxrwxrwx   1 root root    9 Apr 20  2026 lib64 -> usr/lib64
-drwxr-xr-x   2 root root 4096 Oct 25 10:25 media
-drwxr-xr-x   2 root root 4096 Oct 25 10:25 mnt
-drwxr-xr-x   2 root root 4096 Oct 25 10:25 opt
-dr-xr-xr-x 284 root root    0 Nov  3 00:14 proc
-drwx------   2 root root 4096 Oct 25 10:26 root
-drwxr-xr-x   4 root root 4096 Oct 25 10:26 run
-lrwxrwxrwx   1 root root    8 Apr 20  2026 sbin -> usr/sbin
-drwxr-xr-x   2 root root 4096 Oct 25 10:25 srv
-dr-xr-xr-x  12 root root    0 Nov  3 00:16 sys
-drwxr-xr-x   2 root root 4096 Nov  3 00:16 testdir
--rw-r--r--   1 root root    6 Nov  3 00:15 testfile.txt
-drwxrwxrwt   2 root root 4096 Oct 25 10:25 tmp
-drwxr-xr-x  12 root root 4096 Oct 25 10:24 usr
-drwxr-xr-x  11 root root 4096 Oct 25 10:26 var
+root@cfb0165a6481:/app# ls -l
+total 12
+-rwxrwxrwx 1 root root 11049 Nov  4 04:30 README.md
+-rw-r--r-- 1 root root     0 Nov  4 04:46 test.txt
+drwxr-xr-x 1 root root  4096 Nov  4 04:46 testdir
 ```
 
 변경 후
 
 ```
-root@31a402df5eba:/# chmod 777 testfile.txt
-root@31a402df5eba:/# chmod 700 testdir
-root@31a402df5eba:/# ls -l
-total 56
-lrwxrwxrwx   1 root root    7 Apr 20  2026 bin -> usr/bin
-drwxr-xr-x   2 root root 4096 Apr 20  2026 boot
-drwxr-xr-x   5 root root  360 Nov  3 00:14 dev
-drwxr-xr-x   1 root root 4096 Nov  3 00:14 etc
-drwxr-xr-x   3 root root 4096 Oct 25 10:26 home
-lrwxrwxrwx   1 root root    7 Apr 20  2026 lib -> usr/lib
-lrwxrwxrwx   1 root root    9 Apr 20  2026 lib64 -> usr/lib64
-drwxr-xr-x   2 root root 4096 Oct 25 10:25 media
-drwxr-xr-x   2 root root 4096 Oct 25 10:25 mnt
-drwxr-xr-x   2 root root 4096 Oct 25 10:25 opt
-dr-xr-xr-x 284 root root    0 Nov  3 00:14 proc
-drwx------   2 root root 4096 Oct 25 10:26 root
-drwxr-xr-x   4 root root 4096 Oct 25 10:26 run
-lrwxrwxrwx   1 root root    8 Apr 20  2026 sbin -> usr/sbin
-drwxr-xr-x   2 root root 4096 Oct 25 10:25 srv
-dr-xr-xr-x  12 root root    0 Nov  3 00:16 sys
-drwx------   2 root root 4096 Nov  3 00:16 testdir
--rwxrwxrwx   1 root root    6 Nov  3 00:15 testfile.txt
-drwxrwxrwt   2 root root 4096 Oct 25 10:25 tmp
-drwxr-xr-x  12 root root 4096 Oct 25 10:24 usr
-drwxr-xr-x  11 root root 4096 Oct 25 10:26 var
+root@cfb0165a6481:/app# chmod 777 test.txt
+root@cfb0165a6481:/app# chmod 700 testdir
+root@cfb0165a6481:/app# ls -l
+total 12
+-rwxrwxrwx 1 root root 11049 Nov  4 04:30 README.md
+-rwxrwxrwx 1 root root     0 Nov  4 04:46 test.txt
+drwx------ 1 root root  4096 Nov  4 04:46 testdir
 ```
 
 ### Docker 설치 및 점검
@@ -110,16 +166,14 @@ drwxr-xr-x  11 root root 4096 Oct 25 10:26 var
 #### docker version
 
 ```
-PS C:\Users\ethanhaeunc4031\Ethan-codyssey> docker --version
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> docker --version
 Docker version 29.9.2, build a82e528
 ```
 
 #### docker info
 
 ```
-PS C:\Users\ethanhaeunc4031\Ethan-codyssey> docker --version
-Docker version 29.9.2, build a82e528
-PS C:\Users\ethanhaeunc4031\Ethan-codyssey> docker info
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> docker info
 Client:
  Version:    29.9.2
  Context:    desktop-linux
@@ -210,7 +264,7 @@ Server:
  CPUs: 24
  Total Memory: 15.25GiB
  Name: docker-desktop
- ID: 08a2f0f3-ad00-415b-81d2-40a6c7663106
+ ID: 00ac1422-4e54-4feb-a91a-d0196885130e
  Docker Root Dir: /var/lib/docker
  Debug Mode: false
  HTTP Proxy: http.docker.internal:3128
@@ -225,12 +279,19 @@ Server:
   ::1/128
  Live Restore Enabled: false
  Firewall Backend: iptables
+ ```
+
+##### Docker 실행
+
+```
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> docker run -it --rm -v "${PWD}:/app" -w /app python:3.12-slim bash
+root@f0c7d99b2ada:/app# 
 ```
 
-#### hello-world 출력
+### hello-world 실행
 
 ```
-PS C:\Users\ethanhaeunc4031\Ethan-codyssey> docker run hello-world
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> docker run hello-world
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
 4f55086f7dd0: Pull complete 
@@ -259,37 +320,36 @@ Share images, automate workflows, and more with a free Docker ID:
 For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 ```
-
-### Docker 기본 운영 명령(images/ps/logs/stats)
+### Docker 기본 운영 명령(images/ps/logs/stats/etc..)
 
 #### images
 ```
-PS C:\Users\ethanhaeunc4031\Ethan-codyssey> docker images
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> docker images
                                                                                                     i Info →   U  In Use
 IMAGE                ID             DISK USAGE   CONTENT SIZE   EXTRA
 hello-world:latest   c567b231f656       25.9kB         9.49kB    U   
-python:3.12-slim     b18b261e1b49        179MB         45.5MB        
+python:3.12-slim     b18b261e1b49        180MB         45.5MB 
 ```
 
 #### ps
 
 ##### 실행 중인 컨테이너만
 ```
-PS C:\Users\ethanhaeunc4031\Ethan-codyssey> docker ps
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
 ##### 종료된 것 포함 전체
 ```
-PS C:\Users\ethanhaeunc4031\Ethan-codyssey> docker  ps -a
-CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                     PORTS     NAMES
-3ceba106d0f1   hello-world   "/hello"   29 minutes ago   Exited (0) 5 minutes ago             silly_spence
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> docker ps -a
+CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                      PORTS     NAMES
+5e91d81ea406   hello-world   "/hello"   50 seconds ago   Exited (0) 49 seconds ago             suspicious_benz
 ```
 
 #### logs
 
 ```
-PS C:\Users\ethanhaeunc4031\Ethan-codyssey> docker logs silly_spence
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> docker logs suspicious_benz
 
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
@@ -312,9 +372,32 @@ Share images, automate workflows, and more with a free Docker ID:
 For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 ```
+
 #### stats
 
 ```
-PS C:\Users\ethanhaeunc4031\Ethan-codyssey> docker stats --no-stream
+PS C:\Users\ethanhaeunc4031\Ethan-codyssey\1_1_assignments> docker stats
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS
 ```
 > N/A(실행 중인 컨테이너 없음)
+
+#### etc..
+
+
+
+##### 
+
+
+
+
+
+
+
+
+# 트러블슈팅 2건 이상(문제 -> 원인 가설 -> 확인 -> 해결/대안)
+
+## 트러플슈팅 1: txt 파일 한글 깨짐
+- 문제: test.txt 생성 후 파일 내에 한글로 되어있는 text가 깨져 보임
+- 원인 가설: 파일 인코딩 불일치(CP949 <-> UTF-8)
+- 확인: VSCode 상태바에서 인코딩 확인
+- 해결: "Reopen with Encoding"으로 올바른 인코딩 선택
